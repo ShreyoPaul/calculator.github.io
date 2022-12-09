@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        body {
+            background: rgb(255, 205, 165);
+            background: linear-gradient(126deg, rgba(255, 205, 165, 1) 0%, rgba(238, 77, 95, 1) 90%);
+            padding-top: 15vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .mainCon{
+            scale: 1.2;
+            width: 320px;
+            height: 440px;
+            margin-bottom: 13vh;
+            align-items: center;
+            border:  rgba(255, 205, 165, 1)  solid 1px;
+            border-radius: 15px;
+        
+        }
+        .container,
+        table {
+            font-size: 20px;
+            text-align: center;
+            align-items: center;
+            margin-left: auto;
+            margin-right: auto;
+            
+        }
+
+        button {
+            text-decoration: none;
+            background-color: transparent;
+            text-transform: none;
+            border: 2px solid rgba(255, 205, 165, 1);
+            width: 47px;
+            height: 45px;
+            border-radius: 5px;
+            transition: 0.4s;
+            background-color: rgba(255, 205, 165, 0.678);
+            font-size: 15px;
+        }
+
+        input {
+            padding: 1% 2%;
+            margin-bottom: 3%;
+            font-size: 19px;
+            height: 48px;
+            width: auto;
+            text-align: right;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            
+            width: 45px;
+            border: 2px solid rgba(238, 77, 95, 1);
+            border-radius: 6px;
+            background-color: rgba(233, 93, 109, 0.589);
+            
+        }
+    </style>
+</head>
+
+<body>
+    <div class="mainCon">
+        <div class="container">
+            <h1 style="color: rgba(255, 205, 165, 1);">
+                Calculator
+            </h1>
+            <input type="text" name="result" id="result">
+        </div>
+        <table>
+            <tr>
+                <td><button>7</button></td>
+                <td><button>8</button></td>
+                <td><button>9</button></td>
+                <td><button>+</button></td>
+                <td><button>-</button></td>
+            </tr>
+            <tr>
+                <td><button>4</button></td>
+                <td><button>5</button></td>
+                <td><button>6</button></td>
+                <td><button>/</button></td>
+                <td><button>x</button></td>
+            </tr>
+            <tr>
+                <td><button>1</button></td>
+                <td><button>2</button></td>
+                <td><button>3</button></td>
+                <td colspan="2" rowspan="2"><button style="width: 100%;height: 95px;">=</button></td>
+            </tr>
+            <tr>
+                <td><button id="0">0</button></td>
+                <td><button>00</button></td>
+                <td><button>C</button></td>
+            </tr>
+            <tr>
+                <td><button id="back"> &#8592 </button></td>
+                <td><button> . </button></td>
+                <td><button> ( </button></td>
+                <td><button> ) </button></td>
+                <td><button> INT </button></td>
+                
+            </tr>
+        </table>
+    </div>
+    <script>
+        let screen = document.getElementById('result');
+        buttons = document.querySelectorAll('button');
+        console.log(buttons);
+        let back = document.querySelector('#back');
+        let c = -1, flag = 0;
+        let screenValue1;
+        let screenValue = '';
+        for (item of buttons) {
+
+            item.addEventListener('click', (e) => {
+                let buttonText = e.target.innerText;
+                c++;
+
+                if (buttonText == 'x') {
+                    buttonText = '*';
+                    screenValue += buttonText;
+                    screen.value = screenValue;
+                }
+                else if (buttonText == 'C') {
+                    c = -1;
+                    screenValue = '';
+                    screen.value = screenValue;
+
+                }
+                else if (buttonText == "=") {
+                    c--;
+                    // console.log(c + '  Button text is ', buttonText);
+                    if (screenValue[0] == '.' || screenValue[0] == '=' || screenValue[0] == '+' || screenValue[0] == '-' || screenValue[0] == '/' || screenValue[0] == '*' || screenValue[0] == "←") {
+                        alert("Enter first number !");
+                        screenValue = '0';
+                        // screen.value = eval(screenValue);
+                        buttonText[0] = 0;
+                    }
+                    else if (screenValue[c] == '=') {
+                        c--;
+                    }
+                    else if (screenValue[c] == '.' || screenValue[c] == '=' || screenValue[c] == '+' || screenValue[c] == '-' || screenValue[c] == '/' || screenValue[c] == '*' || screenValue[c] == "←") {
+                        alert("Last input is a operator ! ");
+                    }
+                    else {
+                        // if (flag == 1) {
+                        //     screen.value = eval(screenValue1);
+                        // }
+                        //  screen.value = eval(screenValue);
+                        // else{
+                        // screenValue = eval(screenValue);
+                        screen.value = eval(screenValue);
+                        // screenValue  = screen.value ;
+                        // screenValue = 
+                        // }
+                        // console.log(screenValue1);
+                    }
+
+                }
+                else if (buttonText == "←") {
+
+                    screenValue1 = screenValue.substr(0, c - 1);
+                    c = c - 2;
+                    // 
+                    console.log(screenValue);
+                    flag = 1;
+                    console.log(screenValue1 + "  >>>" + c);
+
+                    screen.value = screenValue1;
+                    screenValue = screenValue1;
+                }
+                else if(buttonText == 'INT'){
+                    // console.log(parseInt(screen.value));
+                    screen.value = parseInt(screen.value);
+                    screenValue = screenValue1 = parseInt(screen.value)
+                }
+                else {
+                    screenValue += buttonText;
+                    screen.value = screenValue;
+                }
+                // console.log(c+"\t"+screenValue);
+                console.log(c + '  Button text is ', buttonText);
+            });
+        }
+    </script>
+</body>
+
+</html>
